@@ -1,0 +1,1276 @@
+gw = 900
+gh = 600
+'title region
+titleRegion = 40
+SetupStartWindow()
+GraphicsWindow.Width = 900
+GraphicsWindow.Height = 600
+'makes titleregion part of height
+GraphicsWindow.Width = gw
+GraphicsWindow.Height = gh + titleRegion
+File.DeleteDirectory("C:\Small Basic\SmallBasicWebsite")
+
+'start window
+Sub SetupStartWindow
+  GraphicsWindow.Title = "Create Html File Setup"
+  GraphicsWindow.BrushColor = "black"
+  htmlNameText = Shapes.AddText("Html File Name")
+  htmlNameText2 = Shapes.AddText("Html File 2 Name")
+  cssNameText = Shapes.AddText("Css File Name")
+  Shapes.Move(htmlNameText,280,titleRegion+85)
+  Shapes.Move(htmlNameText2,270,titleRegion+120)
+  Shapes.Move(cssNameText,280,titleRegion+155)
+  GraphicsWindow.BrushColor = "gray"
+  htmlNameBox = Controls.AddTextBox(380,titleRegion+80)
+  htmlNameBox2 = Controls.AddTextBox(380,titleRegion+115)
+  cssNameBox = Controls.AddTextBox(380,titleRegion+150)
+  Controls.SetSize(htmlNameBox,150,30)
+  Controls.SetSize(htmlNameBox2,150,30)
+  Controls.SetSize(cssNameBox,150,30)
+  GraphicsWindow.FontSize = 90
+  GraphicsWindow.BrushColor="black"
+  CreateButton = Controls.AddButton("Create",315,titleRegion+280)
+  GraphicsWindow.FontSize = 15
+  GraphicsWindow.BrushColor="gray"
+  ViewHtml = Shapes.AddText("To view Html File, Open C:\Small Basic\SmallBasicWebsite\ Your File Name")
+  Shapes.Move(ViewHtml,160,titleRegion+200)
+EndSub
+
+
+'start window begin button that launches page1 sub
+Controls.ButtonClicked = CreateButton
+Sub CreateButton  
+  If Controls.LastClickedButton = CreateButton Then
+    indexPath = "C:\Small Basic\SmallBasicWebsite\" + Controls.GetTextBoxText(htmlNameBox) + ".html"
+    indexPath2 = "C:\Small Basic\SmallBasicWebsite\" + Controls.GetTextBoxText(htmlNameBox2) + ".html"
+    CssPath = "C:\Small Basic\SmallBasicWebsite\Css\" + Controls.GetTextBoxText(cssNameBox) + ".css"
+    
+    If Controls.GetTextBoxText(htmlNameBox) Or Controls.GetTextBoxText(htmlNameBox2) Or Controls.GetTextBoxText(cssNameBox) = "" Then
+      Controls.SetTextBoxText(htmlNameBox,"Enter-a-valid-Name")
+      Controls.SetTextBoxText(htmlNameBox2,"Enter-a-valid-Name")
+      Controls.SetTextBoxText(cssNameBox,"Enter-a-valid-Name")
+    Else
+      Controls.ShowControl(RedBgColor)
+      Controls.ShowControl(BlueBgColor)
+      Controls.ShowControl(GreenBgColor)
+      Controls.ShowControl(CyanBgColor)
+      Controls.ShowControl(BlackBgColor)
+      Controls.ShowControl(WhiteBgColor)
+      Controls.ShowControl(BgColorBox)
+      Controls.ShowControl(ConfirmBg)
+      
+      Controls.HideControl(RedBgColor2)
+      Controls.HideControl(BlueBgColor2)
+      Controls.HideControl(GreenBgColor2)
+      Controls.HideControl(CyanBgColor2)
+      Controls.HideControl(BlackBgColor2)
+      Controls.HideControl(WhiteBgColor2)
+      Controls.HideControl(BgColorBox2)
+      Controls.HideControl(ConfirmBg2)
+      
+      Controls.HideControl(RedBg2)
+      Controls.HideControl(GreenBg2)
+      Controls.HideControl(BlueBg2)
+      GraphicsWindow.KeyDown = KeyPress
+      Page1()
+      File.CreateDirectory("C:\Small Basic\SmallBasicWebsite")
+      File.CreateDirectory("C:\Small Basic\SmallBasicWebsite\Css")
+      Controls.HideControl(CreateButton)
+      Controls.HideControl(htmlNameBox)
+      Controls.HideControl(htmlNameBox2)
+      Controls.HideControl(CssNameBox)
+      Shapes.HideShape(htmlNameText)
+      Shapes.HideShape(htmlNameText2)
+      Shapes.HideShape(cssNameText)
+      Controls.ShowControl(SaveButton)
+      Shapes.ShowShape(OnOffSave)
+      Controls.showControl(TitleBox)
+      Controls.showControl(titleRegion)
+      Controls.showControl(RightButton)
+      Controls.showControl(CenterButton)
+      Controls.showcontrol(LeftButton)
+      Controls.showControl(HeaderBox)
+      Shapes.showshape(HeaderText)
+      Shapes.showShape(TitleText)
+      Shapes.Move(ViewHtml,160,titleRegion+550)
+    EndIf
+  EndIf
+  
+  'save button for page 1
+  If Controls.LastClickedButton = SaveButton Then
+    Errorflag = 1
+    ErrorflagPar = 1
+    ErrorflagBg = 1
+    Controls.HideControl(redNumber)
+    Controls.HideControl(blueNumber)
+    Controls.HideControl(greenNumber)
+    Shapes.Remove(OnOffSave)
+    GraphicsWindow.BrushColor = "green"
+    OnOffSave = Shapes.AddRectangle(30,30)
+    Shapes.Move(OnOffSave,gw-190,gh+titleRegion-125)
+    hnamebox = Controls.GetTextBoxText(htmlNameBox)
+    hnamebox2 = Controls.GetTextBoxText(htmlNameBox2)
+    cnamebox = Controls.GetTextBoxText(cssNameBox)
+    Shapes.Move(OnOffSave,gw-190,gh+titleRegion-125)
+    LinkCss = "<link rel='stylesheet' href='Css\" + cnamebox + ".css" + "'>"
+    t = Controls.GetTextBoxText(TitleBox)
+    h = Controls.GetTextBoxText(HeaderBox)
+    p = Controls.GetTextBoxText(ParBox)
+    File.WriteLine(indexPath,1,"<html class='Page1'>")
+    File.WriteLine(IndexPath,2,LinkCss)
+    File.WriteLine(indexPath,3,"<title>" + t + "</title>")
+    File.WriteLine(indexPath,4,"<h1>" + h + "</h1>")
+    File.WriteLine(indexPath,5,"<ul>")
+    File.WriteLine(indexPath,6,"<li><a href='" + hnamebox + ".html'>" + hnamebox + "</a></li>")
+    File.WriteLine(indexPath,7,"<li><a href='" + hnamebox2 + ".html'>" + hnamebox2 + "</a></li>")
+    File.WriteLine(indexPath,8,"</ul>")
+    File.WriteLine(indexPath,9,"<p>" + p + "</p>" )
+    File.WriteLine(indexPath,10,"")
+    File.WriteLine(indexPath,11,"</html>")
+    
+    'css
+    'File.WriteLine(CssPath,1,"h1{text-align:center;}")
+    'File.WriteLine(CssPath,2,".pg2 h1{align:center;}")
+    File.WriteLine(CssPath,5,"ul li a {justify-content: space-around;color:gray;}")
+    File.WriteLine(CssPath,6,"li a {text-decoration: none;}")
+    File.WriteLine(CssPath,7,"ul{display: flex;}")
+    File.WriteLine(CssPath,8,"ul li{text-transform:uppercase;margin:0 10px;list-style-type:none;display:flex;font-size: 1em;}")
+    File.WriteLine(CssPath,9,"ul li a:hover{color:black;}") 
+    Controls.HideControl(HeaderBox2)
+  EndIf
+  Css()
+  
+  'save button for page 2
+  If Controls.LastClickedButton = SaveButton2 Then
+    Errorflag2 = 1
+    ErrorflagPar2 = 1
+    ErrorflagBg2 =1
+    Controls.HideControl(redNumber2)
+    Controls.HideControl(blueNumber2)
+    Controls.HideControl(greenNumber2)
+    Shapes.Remove(OnOffSave)
+    GraphicsWindow.BrushColor = "green"
+    OnOffSave = Shapes.AddRectangle(30,30)
+    Shapes.Move(OnOffSave,gw-190,gh+titleRegion-125)
+    LinkCss = "<link rel='stylesheet' href='Css\" + controls.GetTextBoxText(cssNameBox) + ".css" + "'>"
+    t2 = Controls.GetTextBoxText(TitleBox2)
+    h2 = Controls.GetTextBoxText(HeaderBox2)
+    p2 = Controls.GetTextBoxText(ParBox2)
+    File.WriteLine(indexPath2,1,"<html class='Page2'>")
+    File.WriteLine(IndexPath2,2,LinkCss)
+    File.WriteLine(indexPath2,3,"<div class='Pg2'>")
+    File.WriteLine(indexPath2,4,"<title>" + t2 + "</title>")
+    File.WriteLine(indexPath2,5,"<h1>" + h2 + "</h1>")
+    File.WriteLine(indexPath2,6,"</div>")
+    File.WriteLine(indexPath2,7,"<ul>")
+    File.WriteLine(indexPath2,8,"<li><a href='" + hnamebox + ".html'>" + hnamebox + "</a></li>")
+    File.WriteLine(indexPath2,9,"<li><a href='" + hnamebox2 + ".html'>" + hnamebox2 + "</a></li>")
+    File.WriteLine(indexPath2,10,"</ul>")
+    File.WriteLine(indexPath2,11,"<div class='Par2'>")
+    File.WriteLine(indexPath2,12,"<p>" + p2 + "</p>")
+    File.WriteLine(indexPath2,13,"</div>")
+    File.WriteLine(indexPath2,14,"</div>")
+    File.WriteLine(indexPath2,15,"</html>")
+    
+    'css      File.WriteLine(CssPath,5,"ul li a {justify-content: space-around;color:gray;}")
+    File.WriteLine(CssPath,6,"li a {text-decoration: none;}")
+    File.WriteLine(CssPath,7,"ul{display: flex;}")
+    File.WriteLine(CssPath,8,"ul li{text-transform:uppercase;margin:0 10px;list-style-type:none;display:flex;font-size: 1em;}")
+    File.WriteLine(CssPath,9,"ul li a:hover{color:black;}") 
+
+  EndIf
+  Css()
+EndSub
+
+'makes shape red for page 1
+Sub onOffSave
+  Shapes.Remove(OnOffSave)
+  GraphicsWindow.BrushColor = "red"
+  OnOffSave = Shapes.AddRectangle(30,30)
+  Shapes.Move(OnOffSave,gw-190,gh+titleRegion-125)
+EndSub
+
+'makes shape red if you type
+sub KeyPress
+  If Text.GetLength(GraphicsWindow.LastKey) = 1 Then
+    onOffSave()
+  EndIf
+EndSub
+
+'styles for html and css
+Sub Css 
+  'makes buttons green when clicked on
+  GraphicsWindow.BrushColor="gray"
+  If Controls.LastClickedButton = LeftButton Then
+    onOffSave()
+    'sets css file to align items depending on the button clicked
+    File.WriteLine(CssPath,1,".Page1 h1{text-align:left;}") 'line1
+    GraphicsWindow.BrushColor = "green"
+    LeftButton = Controls.AddButton("<--",360,titleRegion+110)
+    GraphicsWindow.BrushColor="gray"
+    CenterButton = Controls.AddButton("Center",428,titleRegion+110)
+    RightButton = Controls.AddButton("-->",420+105,titleRegion+110)
+  EndIf
+  
+  If Controls.LastClickedButton = CenterButton Then
+    onOffSave()
+    'sets css file to align items depending on the button clicked
+    File.WriteLine(CssPath,1,".Page1 h1{text-align:center;}") 'line1
+    GraphicsWindow.BrushColor="green"
+    CenterButton = Controls.AddButton("Center",428,titleRegion+110)
+    GraphicsWindow.BrushColor = "gray"
+    LeftButton = Controls.AddButton("<--",360,titleRegion+110)
+    RightButton = Controls.AddButton("-->",420+105,titleRegion+110)
+  EndIf
+  
+  If Controls.LastClickedButton = RightButton Then
+    onOffSave()
+    'sets css file to align items depending on the button clicked
+    File.WriteLine(CssPath,1,".Page1 h1{text-align:right;}") 'line1
+    GraphicsWindow.BrushColor="green"
+    RightButton = Controls.AddButton("-->",420+105,titleRegion+110)
+    GraphicsWindow.BrushColor="gray"
+    LeftButton = Controls.AddButton("<--",360,titleRegion+110)
+    CenterButton = Controls.AddButton("Center",428,titleRegion+110)
+  EndIf 
+  
+  ''Makes paragraph buttons green when clicked
+  If Controls.LastClickedButton = LeftButtonP Then
+    onOffSave()
+    File.WriteLine(CssPath,2,".Page1 p{text-align:left;}") 'line1
+    GraphicsWindow.BrushColor = "green"
+    LeftButtonP = Controls.AddButton("<--",340,titleRegion+300)
+    GraphicsWindow.BrushColor="gray"
+    CenterButtonP = Controls.AddButton("Center",430,titleRegion+300)
+    RightButtonP = Controls.AddButton("-->",450+105,titleRegion+300)
+  EndIf
+  
+  If Controls.LastClickedButton = CenterButtonP Then
+    onOffSave()
+    File.WriteLine(CssPath,2,".Page1 p{text-align:center;}") 'line1
+    GraphicsWindow.BrushColor="green"
+    CenterButtonP = Controls.AddButton("Center",430,titleRegion+300)
+    GraphicsWindow.BrushColor = "gray"
+    LeftButtonP = Controls.AddButton("<--",340,titleRegion+300)
+    RightButtonP = Controls.AddButton("-->",450+105,titleRegion+300)
+  EndIf
+  
+  If Controls.LastClickedButton = RightButtonP Then
+    onOffSave()
+    File.WriteLine(CssPath,2,".Page1 p{text-align:right;}") 'line1
+    GraphicsWindow.BrushColor="green"
+    RightButtonP = Controls.AddButton("-->",450+105,titleRegion+300)
+    GraphicsWindow.BrushColor="gray"
+    LeftButtonP = Controls.AddButton("<--",340,titleRegion+300)
+    CenterButtonP = Controls.AddButton("Center",430,titleRegion+300)
+  EndIf 
+  
+  
+  'page 2 makes buttons green
+  GraphicsWindow.BrushColor="gray"
+  If Controls.LastClickedButton = LeftButton2 Then
+    onOffSave()
+    'sets css file to align items depending on the button clicked
+    File.WriteLine(CssPath,3,".Page2 h1{text-align:left;}") 'line2
+    GraphicsWindow.BrushColor = "green"
+    LeftButton2 = Controls.AddButton("<--",360,titleRegion+110)
+    GraphicsWindow.BrushColor="gray"
+    CenterButton2 = Controls.AddButton("Center",428,titleRegion+110)
+    RightButton2 = Controls.AddButton("-->",420+105,titleRegion+110)
+  EndIf
+  
+  If Controls.LastClickedButton = CenterButton2 Then
+    onOffSave()
+    File.WriteLine(CssPath,3,".Page2 h1{text-align:center;}")'line2
+    GraphicsWindow.BrushColor="green"
+    CenterButton2 = Controls.AddButton("Center",428,titleRegion+110)
+    GraphicsWindow.BrushColor = "gray"
+    LeftButton2 = Controls.AddButton("<--",360,titleRegion+110)
+    RightButton2 = Controls.AddButton("-->",420+105,titleRegion+110)
+  EndIf
+  If Controls.LastClickedButton = RightButton2 Then
+    onOffSave()
+    File.WriteLine(CssPath,3,".Page2 h1{text-align:right;}")'line2
+    GraphicsWindow.BrushColor="green"
+    RightButton2 = Controls.AddButton("-->",420+105,titleRegion+110)
+    GraphicsWindow.BrushColor="gray"
+    LeftButton2 = Controls.AddButton("<--",360,titleRegion+110)
+    CenterButton2 = Controls.AddButton("Center",428,titleRegion+110)
+  EndIf
+  
+  'CenterButton P Page 2
+  If Controls.LastClickedButton = LeftButtonP2 Then
+    onOffSave()
+    File.WriteLine(CssPath,4,".Par2 p{text-align:left;}") 'line1
+    GraphicsWindow.BrushColor = "green"
+    LeftButtonP2 = Controls.AddButton("<--",340,titleRegion+300)
+    GraphicsWindow.BrushColor="gray"
+    CenterButtonP2 = Controls.AddButton("Center",430,titleRegion+300)
+    RightButtonP2 = Controls.AddButton("-->",450+105,titleRegion+300)
+  EndIf
+  
+  If Controls.LastClickedButton = CenterButtonP2 Then
+    onOffSave()
+    File.WriteLine(CssPath,4,".Par2 p{text-align:center;}") 'line1
+    GraphicsWindow.BrushColor="green"
+    CenterButtonP2 = Controls.AddButton("Center",430,titleRegion+300)
+    GraphicsWindow.BrushColor = "gray"
+    LeftButtonP2 = Controls.AddButton("<--",340,titleRegion+300)
+    RightButtonP2 = Controls.AddButton("-->",450+105,titleRegion+300)
+  EndIf
+  
+  If Controls.LastClickedButton = RightButtonP2 Then
+    onOffSave()
+    File.WriteLine(CssPath,4,".Par2 p{text-align:right;}") 'line1
+    GraphicsWindow.BrushColor="green"
+    RightButtonP2 = Controls.AddButton("-->",450+105,titleRegion+300)
+    GraphicsWindow.BrushColor="gray"
+    LeftButtonP2 = Controls.AddButton("<--",340,titleRegion+300)
+    CenterButtonP2 = Controls.AddButton("Center",430,titleRegion+300)
+  EndIf 
+  
+  
+  'links to other page
+  If Controls.LastClickedButton = HomePage Then
+    Page1()
+    shapes.Remove(OnOffSave)
+    Controls.HideControl(HeaderBox2)
+    Controls.HideControl(RightButton2)
+    Controls.HideControl(CenterButton2)
+    Controls.HideControl(LeftButton2)
+    'hides page 2 color buttons for header
+    Controls.HideControl(RedColor2)
+    Controls.HideControl(BlueColor2)
+    Controls.HideControl(GreenColor2)
+    Controls.HideControl(GrayColor2)
+    Controls.HideControl(LeftButtonP2)
+    Controls.HideControl(CenterButtonP2)
+    Controls.HideControl(RightButtonP2)
+    'hides page 2 color buttons for par
+    Controls.HideControl(RedColorPar2)
+    Controls.HideControl(BlueColorPar2)
+    Controls.HideControl(GrayColorPar2)
+    Controls.HideControl(GrayColorPar2)
+    Controls.HideControl(ColorShapePar2)
+    
+    'backounmd color
+    
+    Controls.HideControl(RedBgColor2)
+    Controls.HideControl(BlueBgColor2)
+    Controls.HideControl(GreenBgColor2)
+    Controls.HideControl(CyanBgColor2)
+    Controls.HideControl(BlackBgColor2)
+    Controls.HideControl(WhiteBgColor2)
+    Controls.HideControl(BgColorBox2)
+    Controls.HideControl(CustomBgColor2)
+    
+    Head = File.ReadLine(indexPath,4)
+    GetHead = Text.GetSubText(head,5,text.GetLength(Head) - 9)
+    Controls.SetTextBoxText(HeaderBox,GetHead)
+    
+    ReadPar = File.ReadLine(indexPath,9)
+    getPar = Text.GetSubText(ReadPar,4,Text.GetLength(ReadPar) - 7)
+    Controls.SetTextBoxText(ParBox,getPar)
+  EndIf
+  If Controls.LastClickedButton = NavPage2 Then
+    Page2()
+    Shapes.Remove(onOffSave)
+    Controls.ShowControl(SaveButton2)
+    Controls.HideControl(TitleBox)
+    Controls.HideControl(titleRegion)
+    Controls.HideControl(RightButton)
+    Controls.HideControl(CenterButton)
+    Controls.HideControl(LeftButton)
+    Controls.HideControl(RightButtonP)
+    Controls.HideControl(CenterButtonP)
+    Controls.HideControl(LeftButtonP)
+    Controls.HideControl(HeaderBox)
+    Controls.HideControl(SaveButton)
+    'hides page 1 color buttons for header
+    Controls.HideControl(RedColor)
+    Controls.HideControl(BlueColor)
+    Controls.HideControl(GreenColor)
+    Controls.HideControl(GrayColor)
+    Controls.HideControl(ColorShape)
+    Shapes.HideShape(TitleText)
+    'hides page 1 color butotns for par
+    Controls.HideControl(RedColorPar)
+    Controls.HideControl(BlueColorPar)
+    Controls.HideControl(GrayColorPar)
+    Controls.HideControl(GrayColorPar)
+    Controls.HideControl(ColorShapePar)
+    Controls.HideControl(RedBg)
+    Controls.HideControl(GreenBg)
+    Controls.HideControl(BlueBg)
+    'hides page 1 buttons for bg
+    Controls.HideControl(RedBgColor)
+    Controls.HideControl(BlueBgColor)
+    Controls.HideControl(GreenBgColor)
+    Controls.HideControl(CyanBgColor)
+    Controls.HideControl(BlackBgColor)
+    Controls.HideControl(WhiteBgColor)
+    Controls.HideControl(BgColorBox)
+    Controls.HideControl(CustomBgColor)
+    
+    Head2 = File.ReadLine(indexPath2,5)
+    GetHead2 = Text.GetSubText(Head2,5,text.GetLength(Head2) - 9)
+    Controls.SetTextBoxText(HeaderBox2,GetHead2)
+    
+    ReadPar2 = File.ReadLine(indexPath2,12)
+    getPar2 = Text.GetSubText(ReadPar2,4,Text.GetLength(ReadPar2) - 7)
+    Controls.SetTextBoxText(ParBox2,getPar2)
+    
+    
+  EndIf
+  
+  'page 1 custom color
+  If Controls.LastClickedButton = confirm Then
+    onOffSave()
+    Errorflag = 0
+    redNumber = Controls.GetTextBoxText(red)
+    onOffSave()
+    If redNumber < 0 Or redNumber > 255 then
+      Controls.SetTextBoxText(red,"0")
+      Errorflag = 1
+    EndIf
+    greenNumber = Controls.GetTextBoxText(green)
+    onOffSave()
+    If greenNumber < 0 Or greenNumber > 255 Then
+      Controls.SetTextBoxText(green,"0")
+      Errorflag = 1
+    EndIf
+    blueNumber = Controls.GetTextBoxText(blue)
+    onOffSave()
+    If blueNumber < 0 Or blueNumber > 255 Then 
+      Controls.SetTextBoxText(blue,"0")
+      Errorflag = 1
+    EndIf
+  EndIf 
+  
+  'page 1 custom color for par
+  If Controls.LastClickedButton = confirmPar Then
+    onOffSave()
+    ErrorflagPar = 0
+    redNumberPar = Controls.GetTextBoxText(redPar)
+    onOffSave()
+    If redNumberPar < 0 Or redNumberPar > 255 then
+      Controls.SetTextBoxText(redPar,"0")
+      ErrorflagPar = 1
+    EndIf
+    greenNumberPar = Controls.GetTextBoxText(greenPar)
+    onOffSave()
+    If greenNumberPar < 0 Or greenNumberPar > 255 Then
+      Controls.SetTextBoxText(greenPar,"0")
+      ErrorflagPar = 1
+    EndIf
+    blueNumberPar = Controls.GetTextBoxText(bluePar)
+    onOffSave()
+    If blueNumberPar < 0 Or blueNumberPar > 255 Then 
+      Controls.SetTextBoxText(bluePar,"0")
+      ErrorflagPar = 1
+    EndIf
+  EndIf 
+  'page 2 custom color
+  If Controls.LastClickedButton = confirm2 Then
+    Errorflag2 = 0
+    redNumber2 = Controls.GetTextBoxText(red2)
+    onOffSave()
+    If redNumber2 < 0 Or redNumber2 > 255 then
+      Controls.SetTextBoxText(red2,"0")
+      Errorflag2 = 1
+    EndIf
+    greenNumber2 = Controls.GetTextBoxText(green2)
+    onOffSave()
+    If greenNumber2 < 0 Or greenNumber2 > 255 Then
+      Controls.SetTextBoxText(green2,"0")
+      Errorflag2 = 1
+    EndIf
+    blueNumber2 = Controls.GetTextBoxText(blue2)
+    onOffSave()
+    If blueNumber2 < 0 Or blueNumber2 > 255 Then 
+      Controls.SetTextBoxText(blue2,"0")
+      Errorflag2 = 1
+    EndIf
+  EndIf 
+  'page 2 custom color for par
+  If Controls.LastClickedButton = confirmPar2 Then
+    ErrorflagPar2 = 0
+    redNumberPar2 = Controls.GetTextBoxText(redPar2)
+    onOffSave()
+    If redNumberPar2 < 0 Or redNumberPar2 > 255 then
+      Controls.SetTextBoxText(redPar2,"0")
+      ErrorflagPar2 = 1
+    EndIf
+    greenNumberPar2 = Controls.GetTextBoxText(greenPar2)
+    onOffSave()
+    If greenNumberPar2 < 0 Or greenNumberPar2 > 255 Then
+      Controls.SetTextBoxText(greenPar2,"0")
+      ErrorflagPar2 = 1
+    EndIf
+    blueNumberPar2 = Controls.GetTextBoxText(bluePar2)
+    onOffSave()
+    If blueNumberPar2 < 0 Or blueNumberPar2 > 255 Then 
+      Controls.SetTextBoxText(bluePar2,"0")
+      ErrorflagPar2 = 1
+    EndIf
+  EndIf 
+  'background custom color
+  If Controls.LastClickedButton = ConfirmBg Then
+    ErrorflagBg = 0
+    redNumberBG = Controls.GetTextBoxText(redBg)
+    onOffSave()
+    If redNumberBg < 0 Or redNumberBg > 255 then
+      Controls.SetTextBoxText(redBg,"0")
+      ErrorflagBg = 1
+    EndIf
+    greenNumberBg = Controls.GetTextBoxText(GreenBg)
+    onOffSave()
+    If greenNumberBg < 0 Or greenNumberBg > 255 Then
+      Controls.SetTextBoxText(GreenBg,"0")
+      ErrorflagBg = 1
+    EndIf
+    blueNumberBg = Controls.GetTextBoxText(BlueBg)
+    onOffSave()
+    If blueNumberBg < 0 Or blueNumberBg > 255 Then 
+      Controls.SetTextBoxText(BlueBg,"0")
+      ErrorflagBg = 1
+    EndIf
+  EndIf 
+  'page 2 bg
+  If Controls.LastClickedButton = ConfirmBg2 Then
+    ErrorflagBg2 = 0
+    redNumberBG2 = Controls.GetTextBoxText(redBg2)
+    onOffSave()
+    If redNumberBg2 < 0 Or redNumberBg2 > 255 then
+      Controls.SetTextBoxText(redBg2,"0")
+      ErrorflagBg2 = 1
+    EndIf
+    greenNumberBg2 = Controls.GetTextBoxText(GreenBg2)
+    onOffSave()
+    If greenNumberBg2 < 0 Or greenNumberBg2 > 255 Then
+      Controls.SetTextBoxText(GreenBg2,"0")
+      ErrorflagBg2 = 1
+    EndIf
+    blueNumberBg2 = Controls.GetTextBoxText(BlueBg2)
+    onOffSave()
+    If blueNumberBg2 < 0 Or blueNumberBg2 > 255 Then 
+      Controls.SetTextBoxText(BlueBg2,"0")
+      ErrorflagBg2 = 1
+    EndIf
+  EndIf 
+  
+  'error flag check for h1 page1
+  If Errorflag = 0 Then
+    GraphicsWindow.BrushColor= GraphicsWindow.GetColorFromRGB(redNumber,greenNumber,blueNumber)
+    File.WriteLine(CssPath,10,".Page1 h1{color:rgb(" + redNumber + "," + greenNumber + "," + blueNumber + ");}")
+    Shapes.Remove(ColorShape)
+    ColorShape = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape,750,titleRegion+95)
+    Controls.HideControl(red)
+    Controls.HideControl(green)  
+    Controls.HideControl(blue) 
+    Controls.HideControl(confirm)  
+  EndIf
+  
+  'error flag check for h1 page2
+  If Errorflag2 = 0 Then
+    GraphicsWindow.BrushColor= GraphicsWindow.GetColorFromRGB(redNumber2,greenNumber2,blueNumber2)
+    File.WriteLine(CssPath,11,".Page2 h1{color:rgb(" + redNumber2 + "," + greenNumber2 + "," + blueNumber2 + ");}")
+    Shapes.Remove(ColorShape2)
+    ColorShape2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape2,750,titleRegion+95)
+    Controls.HideControl(red2)
+    Controls.HideControl(green2)  
+    Controls.HideControl(blue2) 
+    Controls.HideControl(confirm2)  
+  EndIf
+  
+  'erorr flag checks for paragraph
+  If ErrorflagPar = 0 Then
+    GraphicsWindow.BrushColor= GraphicsWindow.GetColorFromRGB(redNumberPar,greenNumberPar,blueNumberPar)
+    File.WriteLine(CssPath,12,".Page1 p{color:rgb(" + redNumberPar + "," + greenNumberPar + "," + blueNumberPar + ");}")
+    Shapes.Remove(ColorShapePar)
+    ColorShapePar = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar,750,titleRegion+280)
+    Controls.HideControl(redPar)
+    Controls.HideControl(greenPar)  
+    Controls.HideControl(bluePar) 
+    Controls.HideControl(confirmPar)  
+  EndIf
+  
+  'erorr flag checks for paragraph page2
+  If ErrorflagPar2 = 0 Then
+    GraphicsWindow.BrushColor= GraphicsWindow.GetColorFromRGB(redNumberPar2,greenNumberPar2,blueNumberPar2)
+    File.WriteLine(CssPath,13,".Par2 p{color:rgb(" + redNumberPar2 + "," + greenNumberPar2 + "," + blueNumberPar2 + ");}")
+    Shapes.Remove(ColorShapePar2)
+    ColorShapePar2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar2,750,titleRegion+280)
+    Controls.HideControl(redPar2)
+    Controls.HideControl(greenPar2)  
+    Controls.HideControl(bluePar2) 
+    Controls.HideControl(confirmPar2)  
+  EndIf
+  'error flag checks for background color
+  If ErrorflagBg = 0 Then
+    GraphicsWindow.BrushColor= GraphicsWindow.GetColorFromRGB(redNumberBG,greenNumberBg,blueNumberBg)
+    File.WriteLine(CssPath,14,".Page1 body{background-color:rgb(" + redNumberBG + "," + greenNumberBg + "," + blueNumberBg + ");}")
+    Shapes.Remove(BgColorBox)
+    BgColorBox = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox,150,titleRegion+253)
+    Controls.HideControl(redBg)
+    Controls.HideControl(GreenBg)  
+    Controls.HideControl(BlueBg) 
+    Controls.HideControl(ConfirmBg)  
+  EndIf
+  If ErrorflagBg2 = 0 Then
+    GraphicsWindow.BrushColor= GraphicsWindow.GetColorFromRGB(redNumberBG2,greenNumberBg2,blueNumberBg2)
+    File.WriteLine(CssPath,15,".Page2 body{background-color:rgb(" + redNumberBG2 + "," + greenNumberBg2 + "," + blueNumberBg2 + ");}")
+    Shapes.Remove(BgColorBox2)
+    BgColorBox2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox2,150,titleRegion+253)
+    Controls.HideControl(redBg2)
+    Controls.HideControl(GreenBg2)  
+    Controls.HideControl(BlueBg2) 
+    Controls.HideControl(ConfirmBg2)  
+  EndIf
+  
+  'open custom color menu
+  If Controls.LastClickedButton = CustomColor Then
+    Controls.showControl(confirm)
+    Controls.showControl(green)
+    Controls.showControl(red)
+    Controls.showControl(blue)  
+    'hide page 2 custom color
+    Controls.HideControl(confirm2)
+    Controls.HideControl(green2)
+    Controls.HideControl(red2)
+    Controls.HideControl(blue2)  
+  EndIf
+  
+  'color checks for header page1
+  If Controls.LastClickedButton = RedColor Then
+    onOffSave()
+    File.WriteLine(CssPath,10,".Page1 h1{color:red;}")
+    Shapes.Remove(ColorShape)
+    GraphicsWindow.BrushColor="red"
+    ColorShape = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape,750,titleRegion+95)
+  EndIf
+  
+  If Controls.LastClickedButton = GrayColor Then
+    onOffSave()
+    File.WriteLine(CssPath,10,".Page1 h1{color:gray;}")
+    Shapes.Remove(ColorShape)
+    GraphicsWindow.BrushColor="gray"
+    ColorShape = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape,750,titleRegion+95)
+  EndIf
+  If Controls.LastClickedButton = BlueColor Then
+    onOffSave()
+    File.WriteLine(CssPath,10,".Page1 h1{color:blue;}")
+    Shapes.Remove(ColorShape)
+    GraphicsWindow.BrushColor="blue"
+    ColorShape = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape,750,titleRegion+95)
+  EndIf
+  If Controls.LastClickedButton = GreenColor Then
+    onOffSave()
+    File.WriteLine(CssPath,10,".Page1 h1{color:green;}")
+    Shapes.Remove(ColorShape)
+    GraphicsWindow.BrushColor="green"
+    ColorShape = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape,750,titleRegion+95)
+  EndIf  
+  
+  'color check for header page 2
+  If Controls.LastClickedButton = CustomColor2 Then
+    onOffSave()
+    Controls.showControl(confirm2)
+    Controls.showControl(green2)
+    Controls.showControl(red2)
+    Controls.showControl(blue2)
+    'hide page 1 controls
+    Controls.HideControl(confirm)
+    Controls.HideControl(green)  
+    Controls.HideControl(red)
+    Controls.HideControl(blue)    
+  EndIf
+  
+  'makes page 2 header Colors
+  If Controls.LastClickedButton = RedColor2 Then
+    onOffSave()
+    File.WriteLine(CssPath,11,".Pg2 h1{color:red;}")
+    Shapes.Remove(ColorShape2)
+    GraphicsWindow.BrushColor="red"
+    ColorShape2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape2,750,titleRegion+95)
+  EndIf
+  
+  If Controls.LastClickedButton = GrayColor2 Then
+    onOffSave()
+    File.WriteLine(CssPath,11,".Pg2 h1{color:gray;}")
+    Shapes.Remove(ColorShape2)
+    GraphicsWindow.BrushColor="gray"
+    ColorShape2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape2,750,titleRegion+95)
+  EndIf
+  If Controls.LastClickedButton = BlueColor2 Then
+    onOffSave()
+    File.WriteLine(CssPath,11,".Pg2 h1{color:blue;}")
+    Shapes.Remove(ColorShape2)
+    GraphicsWindow.BrushColor="blue"
+    ColorShape2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape2,750,titleRegion+95)
+  EndIf
+  If Controls.LastClickedButton = GreenColor2 Then
+    onOffSave()
+    File.WriteLine(CssPath,11,".Pg2 h1{color:green;}")
+    Shapes.Remove(ColorShape2)
+    GraphicsWindow.BrushColor="green"
+    ColorShape2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShape2,750,titleRegion+95)
+  EndIf
+  
+  'open custom color menu
+  If Controls.LastClickedButton = CustomColorPar Then
+    Controls.showControl(confirmPar)
+    Controls.showControl(greenPar)
+    Controls.showControl(redPar)
+    Controls.showControl(bluePar)  
+    Controls.HideControl(confirmPar2)
+    Controls.HideControl(greenPar2)
+    Controls.HideControl(redPar2)
+    Controls.HideControl(bluePar2)  
+  EndIf
+  'color check for paragraph page 1
+  If Controls.LastClickedButton = RedColorPar Then
+    onOffSave()
+    File.WriteLine(CssPath,12,".Page1 p{color:red;}")
+    Shapes.Remove(ColorShapePar)
+    GraphicsWindow.BrushColor="red"
+    ColorShapePar = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar,750,titleRegion+280)
+  EndIf
+  
+  If Controls.LastClickedButton = GrayColorPar Then
+    onOffSave()
+    File.WriteLine(CssPath,12,".Page1 p{color:gray;}")
+    Shapes.Remove(ColorShapePar)
+    GraphicsWindow.BrushColor="gray"
+    ColorShapePar = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar,750,titleRegion+280)
+  EndIf
+  If Controls.LastClickedButton = BlueColorPar Then
+    onOffSave()
+    File.WriteLine(CssPath,12,".Page1 p{color:blue;}")
+    Shapes.Remove(ColorShapePar)
+    GraphicsWindow.BrushColor="blue"
+    ColorShapePar = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar,750,titleRegion+280)
+  EndIf
+  If Controls.LastClickedButton = GreenColorPar Then
+    onOffSave()
+    File.WriteLine(CssPath,12,".Page1 p{color:green;}")
+    Shapes.Remove(ColorShapePar)
+    GraphicsWindow.BrushColor="green"
+    ColorShapePar = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar,750,titleRegion+280)
+  EndIf
+  
+  'color check for paragraph page2
+  If Controls.LastClickedButton = CustomColorPar2 Then
+    onOffSave()
+    Controls.showControl(confirmPar2)
+    Controls.showControl(greenPar2)
+    Controls.showControl(redPar2)
+    Controls.showControl(bluePar2)
+    Controls.HideControl(confirmPar)
+    Controls.HideControl(greenPar)  
+    Controls.HideControl(redPar)
+    Controls.HideControl(bluePar)    
+  EndIf
+  
+  If Controls.LastClickedButton = RedColorPar2 Then
+    onOffSave()
+    File.WriteLine(CssPath,13,".Par2 p{color:red;}")
+    Shapes.Remove(ColorShapePar2)
+    GraphicsWindow.BrushColor="red"
+    ColorShapePar2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar2,750,titleRegion+280)
+  EndIf
+  
+  If Controls.LastClickedButton = GrayColorPar2 Then
+    onOffSave()
+    File.WriteLine(CssPath,13,".Par2 p{color:gray;}")
+    Shapes.Remove(ColorShapePar2)
+    GraphicsWindow.BrushColor="gray"
+    ColorShapePar2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar2,750,titleRegion+280)
+  EndIf
+  If Controls.LastClickedButton = BlueColorPar2 Then
+    onOffSave()
+    File.WriteLine(CssPath,13,".Par2 p{color:blue;}")
+    Shapes.Remove(ColorShapePar2)
+    GraphicsWindow.BrushColor="blue"
+    ColorShapePar2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar2,750,titleRegion+280)
+  EndIf
+  If Controls.LastClickedButton = GreenColorPar2 Then
+    onOffSave()
+    File.WriteLine(CssPath,13,".Par2 p{color:green;}")
+    Shapes.Remove(ColorShapePar2)
+    GraphicsWindow.BrushColor="green"
+    ColorShapePar2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(ColorShapePar2,750,titleRegion+280)
+  EndIf
+  If Controls.LastClickedButton = CustomBgColor Then
+    onOffSave()
+    Controls.showControl(ConfirmBg)
+    Controls.showControl(GreenBg)
+    Controls.showControl(RedBg)
+    Controls.showControl(BlueBg)
+    'hide  
+    Controls.HideControl(ConfirmBg2)
+    Controls.HideControl(GreenBg2)
+    Controls.HideControl(RedBg2)
+    Controls.HideControl(BlueBg2)
+    Controls.HideControl(ConfirmBg2)
+  EndIf
+  If Controls.LastClickedButton = RedBgColor Then
+    onOffSave()
+    File.WriteLine(CssPath,14,".Page1 body{background-color:Red;}")
+    Shapes.Remove(BgColorBox)
+    GraphicsWindow.BrushColor = "red"
+    BgColorBox = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = GreenBgColor Then
+    onOffSave()
+    File.WriteLine(CssPath,14,".Page1 body{background-color:green;}")
+    Shapes.Remove(BgColorBox)
+    GraphicsWindow.BrushColor = "green"
+    BgColorBox = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = BlueBgColor Then
+    onOffSave()
+    File.WriteLine(CssPath,14,".Page1 body{background-color:blue;}")
+    Shapes.Remove(BgColorBox)
+    GraphicsWindow.BrushColor = "blue"
+    BgColorBox = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = CyanBgColor Then
+    onOffSave()
+    File.WriteLine(CssPath,14,".Page1 body{background-color:cyan;}")
+    Shapes.Remove(BgColorBox)
+    GraphicsWindow.BrushColor = "cyan"
+    BgColorBox = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = BlackBgColor Then
+    onOffSave()
+    File.WriteLine(CssPath,14,".Page1 body{background-color:black}")
+    Shapes.Remove(BgColorBox)
+    GraphicsWindow.BrushColor = "black"
+    BgColorBox = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = WhiteBgColor Then
+    onOffSave()
+    File.WriteLine(CssPath,14,".Page1 body{background-color:white}")
+    Shapes.Remove(BgColorBox)
+    GraphicsWindow.BrushColor = "white"
+    BgColorBox = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox,150,titleRegion+253)
+  EndIf
+  'Bg color page 2
+  If Controls.LastClickedButton = CustomBgColor2 Then
+    onOffSave()
+    Controls.showControl(ConfirmBg2)
+    Controls.showControl(GreenBg2)
+    Controls.showControl(RedBg2)
+    Controls.showControl(BlueBg2)  
+    'page 1 hide
+    Controls.HideControl(ConfirmBg)
+    Controls.HideControl(GreenBg)
+    Controls.HideControl(RedBg)
+    Controls.HideControl(BlueBg)
+    Controls.HideControl(ConfirmBg)  
+  EndIf
+  If Controls.LastClickedButton = RedBgColor2 Then
+    onOffSave()
+    File.WriteLine(CssPath,15,".Page2 body{background-color:Red;}")
+    Shapes.Remove(BgColorBox2)
+    GraphicsWindow.BrushColor = "red"
+    BgColorBox2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox2,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = GreenBgColor2 Then
+    onOffSave()
+    File.WriteLine(CssPath,15,".Page2 body{background-color:green;}")
+    Shapes.Remove(BgColorBox2)
+    GraphicsWindow.BrushColor = "green"
+    BgColorBox2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox2,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = BlueBgColor2 Then
+    onOffSave()
+    File.WriteLine(CssPath,15,".Page2 body{background-color:blue;}")
+    Shapes.Remove(BgColorBox2)
+    GraphicsWindow.BrushColor = "blue"
+    BgColorBox2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox2,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = CyanBgColor2 Then
+    onOffSave()
+    File.WriteLine(CssPath,15,".Page2 body{background-color:cyan;}")
+    Shapes.Remove(BgColorBox2)
+    GraphicsWindow.BrushColor = "cyan"
+    BgColorBox2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox2,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = BlackBgColor2 Then
+    onOffSave()
+    File.WriteLine(CssPath,15,".Page2 body{background-color:black}")
+    Shapes.Remove(BgColorBox2)
+    GraphicsWindow.BrushColor = "black"
+    BgColorBox2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox2,150,titleRegion+253)
+  EndIf
+  If Controls.LastClickedButton = WhiteBgColor Then
+    onOffSave()
+    File.WriteLine(CssPath,15,".Page2 body{background-color:white}")
+    Shapes.Remove(BgColorBox2)
+    GraphicsWindow.BrushColor = "white"
+    BgColorBox2 = Shapes.AddRectangle(30,30)
+    Shapes.Move(BgColorBox2,150,titleRegion+253)
+  EndIf
+EndSub
+
+'page 1 gui
+Sub Page1
+  Shapes.HideShape(IdentifyPagetextP2)
+  Shapes.HideShape(IdentifytextP2)
+  Shapes.Remove(Identifytext)
+  Shapes.Remove(IdentifyPagetext)
+  GraphicsWindow.FontSize="15"
+  Identifytext= Shapes.AddText("Page:")
+  IdentifyPagetext = Shapes.AddText(Controls.GetTextBoxText(htmlNameBox))
+  Shapes.Move(Identifytext,400,3)
+  Shapes.Move(IdentifyPagetext,450,4)
+  GraphicsWindow.FontSize = 15
+  Shapes.Move(indexPath,200,titleRegion+140)
+  GraphicsWindow.BrushColor = "gray"
+  GraphicsWindow.Title = "Create Html File 1"
+  Shapes.AddLine(0,titleRegion,gw,titleRegion)
+  'title text
+  TitleText = Shapes.AddText("Title:")
+  Shapes.Move(TitleText,6,3)
+  TitleBox = Controls.AddTextBox(60,3)
+  
+  'header
+  GraphicsWindow.FontSize = 30
+  HeaderText = Shapes.AddText("Header")
+  Shapes.Move(HeaderText,400,titleRegion+15)
+  HeaderBox = Controls.AddTextBox(360,titleRegion+55)
+  Controls.SetSize(HeaderBox,200,45)
+  
+  'colors
+  GraphicsWindow.FontSize = "15"
+  GraphicsWindow.brushColor = "red"
+  RedColor = Controls.AddButton("Red",600,titleRegion+55)
+  GraphicsWindow.brushColor="gray"
+  GrayColor = Controls.AddButton("Gray",657,titleRegion+55)
+  GraphicsWindow.brushColor="blue"
+  BlueColor = Controls.AddButton("blue",713,titleRegion+55)
+  GraphicsWindow.brushColor="green"
+  GreenColor = Controls.AddButton("Green",600,titleRegion+95)
+  GraphicsWindow.BrushColor="gray"
+  CustomColor = Controls.AddButton("Custom",660,titleRegion+95)
+  
+  confirm = Controls.AddButton("get this colour",650,titleRegion+128)
+  red = Controls.AddTextBox(650,titleRegion+160)
+  green = Controls.AddTextBox(650,titleRegion+185)
+  blue = Controls.AddTextBox(650,titleRegion+210)
+  Controls.HideControl(confirm)
+  Controls.HideControl(green)
+  Controls.HideControl(red)
+  Controls.HideControl(blue)
+  ColorShape = Shapes.AddRectangle(30,30)
+  Controls.SetSize(RedColor,53,30)
+  Controls.SetSize(GrayColor,53,30)
+  Controls.SetSize(BlueColor,53,30)
+  Controls.SetSize(GreenColor,55,30)
+  Controls.SetSize(CustomColor,80,30)
+  Shapes.Move(ColorShape,750,titleRegion+95)
+  GraphicsWindow.BrushColor="gray"
+  
+  'colors Par
+  GraphicsWindow.FontSize = "15"
+  GraphicsWindow.brushColor = "red"
+  RedColorPar = Controls.AddButton("Red",600,titleRegion+240)
+  GraphicsWindow.brushColor="gray"
+  GrayColorPar = Controls.AddButton("Gray",657,titleRegion+240)
+  GraphicsWindow.brushColor="blue"
+  BlueColorPar = Controls.AddButton("blue",713,titleRegion+240)
+  GraphicsWindow.brushColor="green"
+  GreenColorPar = Controls.AddButton("Green",600,titleRegion+280)
+  GraphicsWindow.BrushColor="gray"
+  CustomColorPar = Controls.AddButton("Custom",660,titleRegion+280)
+  confirmPar = Controls.AddButton("get this colour",650,titleRegion+320)
+  redPar = Controls.AddTextBox(650,titleRegion+355)
+  greenPar = Controls.AddTextBox(650,titleRegion+380)
+  bluePar = Controls.AddTextBox(650,titleRegion+405)
+  Controls.HideControl(confirmPar)
+  Controls.HideControl(greenPar)
+  Controls.HideControl(redPar)
+  Controls.HideControl(bluePar)
+  ColorShapePar = Shapes.AddRectangle(30,30)
+  Controls.SetSize(RedColorPar,53,30)
+  Controls.SetSize(GrayColorPar,53,30)
+  Controls.SetSize(BlueColorPar,53,30)
+  Controls.SetSize(GreenColorPar,55,30)
+  Controls.SetSize(CustomColorPar,80,30)
+  Shapes.Move(ColorShapePar,750,titleRegion+280)
+  GraphicsWindow.BrushColor="gray"
+  
+  'background Colour
+  GraphicsWindow.FontSize = "15"
+  GraphicsWindow.BrushColor = "red"
+  GraphicsWindow.FontSize = "20"
+  GraphicsWindow.BrushColor = "gray"
+  BgColorText = Shapes.AddText("Background Color")
+  Shapes.Move(BgColorText,50,titleRegion+100)
+  GraphicsWindow.BrushColor = "red"
+  RedBgColor = Controls.AddButton("Red",50,titleRegion+150)
+  GraphicsWindow.BrushColor = "green"
+  GreenBgColor = Controls.AddButton("Green",115,titleRegion+150)
+  GraphicsWindow.BrushColor = "blue"
+  BlueBgColor = Controls.AddButton("Blue",200,titleRegion+150)
+  GraphicsWindow.BrushColor = "cyan"
+  CyanBgColor = Controls.AddButton("cyan",50,titleRegion+200)
+  GraphicsWindow.BrushColor = "black"
+  BlackBgColor = Controls.AddButton("black",115,titleRegion+200)
+  GraphicsWindow.BrushColor = "White"
+  WhiteBgColor = Controls.AddButton("White",190,titleRegion+200)
+  GraphicsWindow.FontSize = "20"
+  CustomBgColor = Controls.AddButton("Custom",50,titleRegion+250)
+  GraphicsWindow.FontSize = "20"
+  BgColorBox = Shapes.AddRectangle(30,30)
+  Shapes.Move(BgColorBox,150,titleRegion+253)
+  GraphicsWindow.FontSize="15"
+  GraphicsWindow.BrushColor="gray"
+  ConfirmBg = Controls.AddButton("get this colour",50,titleRegion + 296)
+  RedBg = Controls.AddTextBox(50,titleRegion+330)
+  GreenBg = Controls.AddTextBox(50,titleRegion+ 365)
+  BlueBg = Controls.AddTextBox(50,titleRegion+ 400)
+  Controls.HideControl(RedBg)
+  Controls.HideControl(GreenBg)
+  Controls.HideControl(BlueBg)
+  Controls.HideControl(confirmBg)
+  
+  
+  'par
+  GraphicsWindow.BrushColor="gray"
+  GraphicsWindow.FontSize = 15
+  ParText = Shapes.AddText("Paragraph")
+  Shapes.Move(ParText,410,titleRegion+200)
+  ParBox = Controls.AddTextBox(340,titleRegion+240)
+  Controls.SetSize(ParBox,250,50)
+  
+  'pages
+  hnamebox = Controls.GetTextBoxText(htmlNameBox)
+  hnamebox2 = Controls.GetTextBoxText(htmlNameBox2)
+  GraphicsWindow.FontSize = "15"
+  HomePage = Controls.AddButton(hnamebox,30,titleRegion+10)
+  NavPage2 = Controls.AddButton(hnamebox2,90,titleRegion+10)
+  'NavPage3 = Controls.AddButton("Page3",155,titleRegion+10)
+  Controls.SetSize(HomePage,55,30)
+  Controls.SetSize(NavPage2,55,30)
+  
+  'button to change header position
+  GraphicsWindow.FontSize = 15
+  LeftButton = Controls.AddButton("<--",360,titleRegion+110)
+  CenterButton = Controls.AddButton("Center",428,titleRegion+110)
+  RightButton = Controls.AddButton("-->",420+105,titleRegion+110)
+  
+  'buttons to change body  position for page 1
+  LeftButtonP = Controls.AddButton("<--",340,titleRegion+300)
+  CenterButtonP = Controls.AddButton("Center",430,titleRegion+300)
+  RightButtonP = Controls.AddButton("-->",450+105,titleRegion+300)
+EndSub
+
+'page 2 gui
+GraphicsWindow.FontSize="15"
+hnamebox = Controls.GetTextBoxText(htmlNameBox)
+hnamebox2 = Controls.GetTextBoxText(htmlNameBox2)
+
+Sub Page2
+  Controls.HideControl(red)
+  Controls.HideControl(green)  
+  Controls.HideControl(blue) 
+  Controls.HideControl(confirm)
+  Controls.HideControl(RedColor)
+  Controls.HideControl(GrayColor)  
+  Controls.HideControl(BlueColor) 
+  Controls.HideControl(GreenColor)     
+  Shapes.Remove(IdentifytextP2)
+  Shapes.Remove(IdentifyPagetextP2)
+  Shapes.HideShape(IdentifyPagetext)
+  Shapes.HideShape(Identifytext)
+  GraphicsWindow.FontSize="15"
+  IdentifytextP2 = Shapes.AddText("Page:")
+  IdentifyPagetextP2 = Shapes.AddText(Controls.GetTextBoxText(htmlNameBox2))
+  Shapes.Move(IdentifytextP2,400,3)
+  Shapes.Move(IdentifyPagetextP2,450,4)
+  GraphicsWindow.Title = "Create Html File 2"
+  GraphicsWindow.FontSize = 15
+  Shapes.Move(indexPath,200,titleRegion+140)
+  GraphicsWindow.BrushColor = "gray"
+  Shapes.AddLine(0,titleRegion,gw,titleRegion)
+  
+  'title text
+  TitleText = Shapes.AddText("Title:")
+  Shapes.Move(TitleText,6,3)
+  TitleBox2 = Controls.AddTextBox(60,3)
+  
+  'header
+  GraphicsWindow.FontSize = 30
+  HeaderBox2 = Controls.AddTextBox(360,titleRegion+55)
+  Controls.SetSize(HeaderBox2,200,45)
+  
+  'par
+  GraphicsWindow.FontSize= 15
+  ParText2 = Shapes.AddText("Paragraph")
+  Shapes.Move(ParText2,410,titleRegion+200)
+  ParBox2 = Controls.AddTextBox(340,titleRegion+240)
+  Controls.SetSize(ParBox2,250,50)
+  
+  'colors
+  GraphicsWindow.FontSize = "15"
+  GraphicsWindow.brushColor = "red"
+  RedColor2 = Controls.AddButton("Red",600,titleRegion+55)
+  GraphicsWindow.brushColor="gray"
+  GrayColor2 = Controls.AddButton("Gray",657,titleRegion+55)
+  GraphicsWindow.brushColor="blue"
+  BlueColor2 = Controls.AddButton("blue",713,titleRegion+55)
+  GraphicsWindow.brushColor="green"
+  GreenColor2 = Controls.AddButton("Green",600,titleRegion+95)
+  GraphicsWindow.BrushColor="gray"
+  CustomColor2 = Controls.AddButton("Custom",660,titleRegion+95)
+  
+  confirm2 = Controls.AddButton("get this colour",650,titleRegion+130)
+  red2 = Controls.AddTextBox(650,titleRegion+160)
+  green2 = Controls.AddTextBox(650,titleRegion+190)
+  blue2 = Controls.AddTextBox(650,titleRegion+220)
+  Controls.HideControl(confirm2)
+  Controls.HideControl(green2)
+  Controls.HideControl(red2)
+  Controls.HideControl(blue2)
+  ColorShape2 = Shapes.AddRectangle(30,30)
+  Controls.SetSize(RedColor2,53,30)
+  Controls.SetSize(GrayColor2,53,30)
+  Controls.SetSize(BlueColor2,53,30)
+  Controls.SetSize(GreenColor2,55,30)
+  Controls.SetSize(CustomColor2,80,30)
+  Shapes.Move(ColorShape2,750,titleRegion+95)
+  
+  'background Colour page 2
+  GraphicsWindow.FontSize = "15"
+  GraphicsWindow.BrushColor = "red"
+  GraphicsWindow.FontSize = "20"
+  GraphicsWindow.BrushColor = "gray"
+  BgColorText2 = Shapes.AddText("Background Color")
+  Shapes.Move(BgColorText2,50,titleRegion+100)
+  GraphicsWindow.BrushColor = "red"
+  RedBgColor2 = Controls.AddButton("Red",50,titleRegion+150)
+  GraphicsWindow.BrushColor = "green"
+  GreenBgColor2 = Controls.AddButton("Green",115,titleRegion+150)
+  GraphicsWindow.BrushColor = "blue"
+  BlueBgColor2 = Controls.AddButton("Blue",200,titleRegion+150)
+  GraphicsWindow.BrushColor = "cyan"
+  CyanBgColor2 = Controls.AddButton("cyan",50,titleRegion+200)
+  GraphicsWindow.BrushColor = "black"
+  BlackBgColor2 = Controls.AddButton("black",115,titleRegion+200)
+  GraphicsWindow.BrushColor = "White"
+  WhiteBgColor2 = Controls.AddButton("White",190,titleRegion+200)
+  GraphicsWindow.FontSize = "20"
+  CustomBgColor2 = Controls.AddButton("Custom",50,titleRegion+250)
+  GraphicsWindow.FontSize = "20"
+  BgColorBox2 = Shapes.AddRectangle(30,30)
+  Shapes.Move(BgColorBox2,150,titleRegion+253)
+  GraphicsWindow.FontSize="15"
+  GraphicsWindow.BrushColor="gray"
+  ConfirmBg2 = Controls.AddButton("get this colour",50,titleRegion + 296)
+  RedBg2 = Controls.AddTextBox(50,titleRegion+330)
+  GreenBg2 = Controls.AddTextBox(50,titleRegion+ 365)
+  BlueBg2 = Controls.AddTextBox(50,titleRegion+ 400)
+  Controls.HideControl(RedBg2)
+  Controls.HideControl(GreenBg2)
+  Controls.HideControl(BlueBg2)
+  Controls.HideControl(confirmBg2)
+  
+  'colors Par 2
+  GraphicsWindow.FontSize = "15"
+  GraphicsWindow.brushColor = "red"
+  RedColorPar2 = Controls.AddButton("Red",600,titleRegion+240)
+  GraphicsWindow.brushColor="gray"
+  GrayColorPar2 = Controls.AddButton("Gray",657,titleRegion+240)
+  GraphicsWindow.brushColor="blue"
+  BlueColorPar2 = Controls.AddButton("blue",713,titleRegion+240)
+  GraphicsWindow.brushColor="green"
+  GreenColorPar2 = Controls.AddButton("Green",600,titleRegion+280)
+  GraphicsWindow.BrushColor="gray"
+  CustomColorPar2 = Controls.AddButton("Custom",660,titleRegion+280)
+  
+  confirmPar2 = Controls.AddButton("get this colour",650,titleRegion+320)
+  redPar2 = Controls.AddTextBox(650,titleRegion+355)
+  greenPar2 = Controls.AddTextBox(650,titleRegion+380)
+  bluePar2 = Controls.AddTextBox(650,titleRegion+405)
+  Controls.HideControl(confirmPar2)
+  Controls.HideControl(greenPar2)
+  Controls.HideControl(redPar2)
+  Controls.HideControl(bluePar2)
+  ColorShapePar2 = Shapes.AddRectangle(30,30)
+  Controls.SetSize(RedColorPar2,53,30)
+  Controls.SetSize(GrayColorPar2,53,30)
+  Controls.SetSize(BlueColorPar2,53,30)
+  Controls.SetSize(GreenColorPar2,55,30)
+  Controls.SetSize(CustomColorPar2,80,30)
+  Shapes.Move(ColorShapePar2,750,titleRegion+280)
+  GraphicsWindow.BrushColor="gray"
+  
+  'pages
+  GraphicsWindow.FontSize = "15"
+  HomePage = Controls.AddButton(hnamebox,30,titleRegion+10)
+  NavPage2 = Controls.AddButton(hnamebox2,90,titleRegion+10)
+  'NavPage3 = Controls.AddButton("Page3",155,titleRegion+10)
+  Controls.SetSize(HomePage,55,30)
+  Controls.SetSize(NavPage2,55,30)
+  'Controls.SetSize(NavPage3,55,30)
+  
+  'button to change header position
+  GraphicsWindow.FontSize = 15
+  LeftButton2 = Controls.AddButton("<--",360,titleRegion+110)
+  CenterButton2 = Controls.AddButton("Center",428,titleRegion+110)
+  RightButton2 = Controls.AddButton("-->",420+105,titleRegion+110)
+  
+  'buttons to change body  position for page 1
+  LeftButtonP2 = Controls.AddButton("<--",340,titleRegion+300)
+  CenterButtonP2 = Controls.AddButton("Center",430,titleRegion+300)
+  RightButtonP2 = Controls.AddButton("-->",450+105,titleRegion+300)
+EndSub
+
+'Save Button for page 1
+GraphicsWindow.FontSize = "40"
+GraphicsWindow.BrushColor="gray"
+SaveButton = Controls.AddButton("Save",gw-150,gh+titleRegion-150)
+Controls.HideControl(SaveButton)
+
+'save button 2
+GraphicsWindow.FontSize = "40"
+GraphicsWindow.BrushColor="gray"
+SaveButton2 = Controls.AddButton("Save",gw-150,gh+titleRegion-150)
+Controls.HideControl(SaveButton2)
+
